@@ -1,0 +1,59 @@
+Analyze my Esp32 Cam Training on Edge-Impulse
+
+My data is 80% Training 20% Test
+20images-empty
+20images-paper
+23images-paper_cup
+158images-plastic
+50images-plastic_bottle
+20images-styrofoam
+
+The Neural Network Settings for all is;
+Data augmentation - on
+Auto-weight classes - on
+Profile int8 model - on
+Validation set is not change to 20% to all training I have done batch size is also always on default at 128
+I also use MobileNetV2 96x96 0.35 (final layer: 16 neurons, 0.1 dropout) to all training cause Im using transfer learning
+
+On create impulse in the in the Image data I use the resize fit shortest axis
+I only want the Quantized (int 8) cause I have the Ai Thinker esp32 cam that cant handle the Unoptimized (float32) and cause crashing during analysis so I train
+at learning rate 0.005 I got;
+30 epoch - 85.1% accuracy
+45 epoch - 83% accuracy
+50 epoch - 87.2% accuracy
+80 epoch - 89.4% accuracy
+90 epoch - 80% accuracy
+100 epoch - 89.4% accuracy
+110 epoch - 83% accuracy
+120 epoch - 83% accuracy
+150 epoch - 80% accuracy
+
+learning rate 0.001
+100 epoch - 72% accuracy
+65 epoch - 76% accuracy
+
+learning rate 0.009
+150 epoch - 68% accuracy
+
+learning rate 0.01
+50 epoch - 80.9% accuracy
+80 epoch - 80.9% accuracy
+100 epoch - 87.2% accuracy
+150 epoch - 87.2% accuracy
+
+When I do learning rate 0.05 I got only like 20% accuracy and on learning rate 0.5 i got 14% accuracy  and on learning rate 0.0005 i got 81% all in 100 epoch 
+I updated On create impulse in the Image data I change the resize squash with same settings as the previous
+at learning rate 0.005 I got;
+20 epoch - 83% accuracy
+30 epoch - 83% accuracy
+50 epoch - 74.5% accuracy
+90 epoch - 83% accuracy
+100 epoch - 80% accuracy
+120 epoch - 87.2% accuracy
+130 epoch - 78.7% accuracy
+140 epoch - 85.1% accuracy
+
+
+
+
+ 

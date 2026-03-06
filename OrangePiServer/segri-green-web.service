@@ -1,0 +1,20 @@
+[Unit]
+Description=Segri Green Token Server
+After=segri-green.service network.target systemd-udev-settle.service
+Requires=segri-green.service
+Wants=systemd-udev-settle.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/root/segri_green
+Environment="PATH=/root/segri_green/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStartPre=/bin/bash -c 'stty -F /dev/ttyUSB0 115200 cs8 -cstopb -parenb'
+ExecStartPre=/bin/sleep 15
+ExecStart=/root/segri_green/venv/bin/python3 /root/segri_green/token_server.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

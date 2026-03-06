@@ -1,0 +1,13 @@
+[Unit]
+Description=Segri Green WiFi Hotspot
+After=network.target systemd-udev-settle.service
+Wants=network.target systemd-udev-settle.service
+
+[Service]
+Type=oneshot
+ExecStart=/root/segri_green/start.sh
+RemainAfterExit=yes
+User=root
+
+[Install]
+WantedBy=multi-user.target

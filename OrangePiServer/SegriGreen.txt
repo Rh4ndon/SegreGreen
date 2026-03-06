@@ -1,0 +1,26 @@
+user:SegriGreen
+pass:eco
+rootPass:eco
+
+
+cd ~/segri_green
+source venv/bin/activate
+
+
+nohup /root/segri_green/venv/bin/python3 /root/segri_green/orange_pi_server.py > /root/segri_green/web.log 2>&1 &
+
+cd /root/segri_green
+source venv/bin/activate
+python3 orange_pi_server.py
+
+ssh-keygen -R 192.168.1.48
+ssh root@192.168.1.48  
+
+chmod +x /root/segri_green/start.sh
+
+journalctl -u segri-green-web.service -n 50 --no-pager
+
+# Check the logs
+journalctl -u segri-green-web.service -f
+
+rh4nd0n_031200
