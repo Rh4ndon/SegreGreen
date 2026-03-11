@@ -5,7 +5,7 @@ mkdir -p /root/segri_green/config
 cat > /root/segri_green/config/hostapd.conf << EOF
 interface=wlxe0e1a994e580
 driver=nl80211
-ssid=Segri Green WiFi
+ssid=SegreGreen WiFi
 hw_mode=g
 channel=6
 wmm_enabled=0

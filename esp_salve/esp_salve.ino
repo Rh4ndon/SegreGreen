@@ -24,7 +24,10 @@ struct_message myData;
 #define NEUTRAL_POS 90 // Neutral position
 #define LEFT_POS 0     // Left position
 #define RIGHT_POS 180  // Right position
-#define WAIT_MS 1000   // Wait time between movements
+
+// Wait times between movements
+#define WAIT_MS 1000        // Standard wait time (for plastic bottle)
+#define FAST_WAIT_MS 600    // Faster wait time (for paper, paper cup, cardboard, styrofoam, plastic)
 
 // Create servo objects
 Servo servo1;
@@ -106,11 +109,31 @@ void sortTrash(const char* trash_type) {
   Serial.print("Sorting trash type: ");
   Serial.println(trash_type);
   
-  // Styrofoam and plastic
-  if (strcmp(trash_type, "styrofoam") == 0 || strcmp(trash_type, "plastic") == 0) {
-    Serial.println("Sorting to Bin 1: Styrofoam/Plastic");
+  // Styrofoam and plastic (FASTER)
+  if (strcmp(trash_type, "plastic") == 0) {
+    Serial.println("Sorting to Bin 1: Plastic (FASTER)");
 
-     // Servo Motor 1 Drops (flip right)
+    // Servo Motor 1 Drops (flip right)
+    servo1.write(RIGHT_POS);
+    delay(FAST_WAIT_MS);
+    servo1.write(NEUTRAL_POS);
+    delay(FAST_WAIT_MS);
+    
+    // Servo Motor 2 flip left
+    servo2.write(LEFT_POS);
+    delay(FAST_WAIT_MS);
+    servo2.write(NEUTRAL_POS);
+    delay(FAST_WAIT_MS);
+    
+    // Servo Motor 3 flip right
+    servo3.write(RIGHT_POS);
+    delay(FAST_WAIT_MS);
+    servo3.write(NEUTRAL_POS);
+  }
+    else if (strcmp(trash_type, "styrofoam") == 0){
+    Serial.println("Sorting to Bin 1: Styrofoam");
+
+    // Servo Motor 1 Drops (flip right)
     servo1.write(RIGHT_POS);
     delay(WAIT_MS);
     servo1.write(NEUTRAL_POS);
@@ -126,14 +149,12 @@ void sortTrash(const char* trash_type) {
     servo3.write(RIGHT_POS);
     delay(WAIT_MS);
     servo3.write(NEUTRAL_POS);
-   
-  
   }
-  // Plastic bottle
+  // Plastic bottle (NORMAL SPEED - unchanged)
   else if (strcmp(trash_type, "plastic_bottle") == 0) {
-    Serial.println("Sorting to Bin 2: Plastic Bottle");
+    Serial.println("Sorting to Bin 2: Plastic Bottle (NORMAL SPEED)");
 
-        // Servo Motor 1 Drops (flip right)
+    // Servo Motor 1 Drops (flip right)
     servo1.write(RIGHT_POS);
     delay(WAIT_MS);
     servo1.write(NEUTRAL_POS);
@@ -146,37 +167,30 @@ void sortTrash(const char* trash_type) {
     delay(WAIT_MS);
     
     servo3.write(NEUTRAL_POS);
-    
-   
-    
   }
-  // Paper, paper_cup, cardboard
+  
+  // Paper, paper_cup, cardboard (FASTER)
   else if (strcmp(trash_type, "paper") == 0 || 
            strcmp(trash_type, "paper_cup") == 0 || 
            strcmp(trash_type, "cardboard") == 0) {
-    Serial.println("Sorting to Bin 3: Paper/Cardboard");
+    Serial.println("Sorting to Bin 3: Paper/Cardboard (FASTER)");
 
-     
     // Servo Motor 1 Drops (flip right)
     servo1.write(RIGHT_POS);
-    delay(WAIT_MS);
+    delay(FAST_WAIT_MS);
     servo1.write(NEUTRAL_POS);
-    delay(WAIT_MS);
+    delay(FAST_WAIT_MS);
     
     // Servo Motor 2 flip left
     servo2.write(LEFT_POS);
-    delay(WAIT_MS);
+    delay(FAST_WAIT_MS);
     servo2.write(NEUTRAL_POS);
-    delay(WAIT_MS);
+    delay(FAST_WAIT_MS);
     
     // Servo Motor 3 flip left
     servo3.write(LEFT_POS);
-    delay(WAIT_MS);
+    delay(FAST_WAIT_MS);
     servo3.write(NEUTRAL_POS);
-
-    
-    
-
   }
   else {
     Serial.println("Unknown trash type - No sorting action");
