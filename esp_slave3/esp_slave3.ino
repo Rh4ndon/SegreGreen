@@ -39,20 +39,25 @@ int centerTextX(String text, int textSize) {
 
 // Function to map trash type to display name and minutes
 int getTimePrice(const char* trash_type, String &displayName) {
-    if (strcmp(trash_type, "paper") == 0 || 
-        strcmp(trash_type, "paper_cup") == 0 || 
-        strcmp(trash_type, "cardboard") == 0) {
+    if (strcmp(trash_type, "paper") == 0) {
         displayName = "Biodegradable";
-        return 15;
+        return 6;
     }
-    else if (strcmp(trash_type, "styrofoam") == 0 || 
-             strcmp(trash_type, "plastic") == 0) {
+    else if (strcmp(trash_type, "paper_cup") == 0) {
+        displayName = "Biodegradable";
+        return 8;
+    }
+    else if (strcmp(trash_type, "plastic") == 0) {
         displayName = "Non-Biodegradable";
-        return 20;
+        return 2;
+    }
+    else if (strcmp(trash_type, "styrofoam") == 0) {
+        displayName = "Non-Biodegradable";
+        return 4;
     }
     else if (strcmp(trash_type, "plastic_bottle") == 0) {
         displayName = "Recyclable";
-        return 30;
+        return 10;
     }
     else {
         displayName = "Unknown";
